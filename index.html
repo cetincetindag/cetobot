@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Generator</title>
+  <style>
+    body {
+      font-size: 1.4em;
+    }
+
+    div {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h2>"Gladiatus Time Saver" FREE Tokens Generator!</h2>
+    <input type="text" value="" placeholder="https://s1-en.gladiatus.gameforge.com/game/index.php?mod=player&p=123"
+      id="link">
+    <input type="button" value="Get FREE token" id="generate">
+  </div>
+  <div id="token"></div>
+
+  <script>
+    document.getElementById('generate').addEventListener('click', () => {
+      let link = document.getElementById('link').value;
+      let playerId = parseInt(link.match(/p=(\d+)/i)[1], 10);
+      let player = parseInt((playerId + "").substr(0, 6));
+      let base = 16;
+      let expire = new Date('2122-12-31').getTime();
+      let token = [];
+      token.push(base + (0x13161f663 * player + 0x36f5b846c97a).toString(base));
+      token.push((expire).toString(base));
+      token.push((expire + 0x13161f663 * player).toString(base));
+      token = token.join('-');
+      document.getElementById('token').textContent = token;
+    });
+  </script>
+</body>
+
+</html>
